@@ -2,6 +2,8 @@ package etao.autotest.dao;
 
 import java.sql.*;
 
+import etao.autotest.util.Const;
+
 public class InsertDB {
 
     public static void main(String[] args) {
@@ -23,7 +25,7 @@ public class InsertDB {
 	}
 	try {
 	    Connection connect = DriverManager.getConnection(
-		    "jdbc:mysql://10.125.1.58:3306/test", "root", "isword");
+		    Const.mysqlUrl,Const.mysqlUser,Const.mysqlPassword);
 
 	    System.out.println("Success connect Mysql server!");
 	    Statement stmt = connect.createStatement();

@@ -9,7 +9,7 @@
 	<h1 align="center">适配测试报告</h1>
 <script>
 KISSY.ready(function(S){
-    var path="http://http://10.125.1.58:88/img/";
+    var path="http://10.125.1.58:88/img/";
     var href = location.href;
     var m, val;
     m = href.match(/stamp=(\d{14})/);
@@ -32,7 +32,7 @@ KISSY.ready(function(S){
     /* 请求报告资源接口,tomcat在8888端口监听 */
     S.use("node,io", function(S, Node, IO){
         IO({
-            url: "http://127.0.0.1:8888/Report/go?run_stamp=" + val,
+            url: "http://10.125.1.58:8888/Report/go?run_stamp=" + val,
             dataType: "jsonp",
             jsonpCallback: "report",
             success: function(data) {

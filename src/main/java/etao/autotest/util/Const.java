@@ -47,6 +47,17 @@ public class Const {
     public static final String reportPath = "http://10.125.1.58:88/report.html?run_stamp=";
 
     /**
+     * 数据库配置 "jdbc:mysql://10.125.1.58:3306/test", "root", "isword"
+     */
+    public static final String mysqlUrl = "jdbc:mysql://10.125.1.58:3306/test";
+    public static final String mysqlUser = "root";
+    public static final String mysqlPassword = "isword";
+    /**
+     * UploadServlet
+     */
+    public static final String uploadServerUrl = "http://10.125.1.58:8888/UploadServlet/upload";
+
+    /**
      * 截图保存的路径
      */
     public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))

@@ -444,9 +444,7 @@ public class Utils {
 	     * 上传图片到Tomcat服务器
 	     */
 	    FileUpload up = new FileUpload();
-	    System.out.println(up.send(
-		    "http://127.0.0.1:8888/UploadServlet/upload",
-		    imgFullPathName));
+	    System.out.println(up.send(Const.uploadServerUrl, imgFullPathName));
 	    return true;
 	} catch (Exception e) {
 	    e.printStackTrace();
