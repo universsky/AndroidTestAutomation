@@ -42,7 +42,9 @@ public class Const {
 
     }
 
-    public static final String reportPath = "http://127.0.0.1:88/report.html?run_stamp=";
+    // public static final String reportPath =
+    // "http://127.0.0.1:88/report.html?run_stamp=";
+    public static final String reportPath = "http://10.125.1.58:88/report.html?run_stamp=";
 
     /**
      * ½ØÍ¼±£´æµÄÂ·¾¶

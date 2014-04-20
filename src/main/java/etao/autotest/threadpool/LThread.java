@@ -10,7 +10,7 @@ import java.util.List;
  * @author 东海陈光剑 2014年4月19日 上午2:14:12 线程池: 等待所有子线程全部执行完毕的机制实现
  */
 public class LThread extends Thread {
-    private static List<Thread> runningThreads = new ArrayList<Thread>();
+    private static List<Thread> runningThreads = new ArrayList<Thread>(5);
     Runnable t;
 
     public LThread() {
@@ -44,7 +44,7 @@ public class LThread extends Thread {
 	}
     }
 
-    public static boolean hasThreadRunning() {
+    public boolean hasThreadRunning() {
 	return (runningThreads.size() > 0);// 通过判断runningThreads是否为空就能知道是否还有线程未执行完
     }
 }

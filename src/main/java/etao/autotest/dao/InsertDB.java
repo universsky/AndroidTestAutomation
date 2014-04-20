@@ -23,7 +23,7 @@ public class InsertDB {
 	}
 	try {
 	    Connection connect = DriverManager.getConnection(
-		    "jdbc:mysql://127.0.0.1:3306/test", "root", "isword");
+		    "jdbc:mysql://10.125.1.58:3306/test", "root", "isword");
 
 	    System.out.println("Success connect Mysql server!");
 	    Statement stmt = connect.createStatement();
@@ -52,4 +52,6 @@ public class InsertDB {
     }
 }
 
-// GRANT ALL ON *.* TO root@"%" IDENTIFIED BY isword;
+// GRANT ALL ON *.* TO root@"%" IDENTIFIED BY 'isword';
+// grant all privileges on *.* to root@'%' identified by '12345678' with grant
+// option;

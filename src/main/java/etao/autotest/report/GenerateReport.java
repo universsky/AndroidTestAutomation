@@ -60,9 +60,9 @@ public class GenerateReport {
 		if (dp.isSupported(java.awt.Desktop.Action.BROWSE)) {
 		    dp.browse(reportUri);
 		}
-
 	    } catch (Exception e) {
 		e.printStackTrace();
+
 	    }
 	}
 

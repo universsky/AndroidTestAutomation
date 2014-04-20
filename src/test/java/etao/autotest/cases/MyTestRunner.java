@@ -48,6 +48,7 @@ public class MyTestRunner {
 	return result;
     }
 
+    @SuppressWarnings("finally")
     public void run(String deviceId) {
 	if (mTestCases.isEmpty()) {
 	    System.out.format(WARING_FMT, "没有可运行的测试用例。");
@@ -84,28 +85,32 @@ public class MyTestRunner {
 	    boolean isAllMethodSuccess = true;
 	    List<Method> methods = mTestCases.get(testcase);
 	    for (Method method : methods) {
+
 		System.out.format("----方法%s%n", method.getName());
 		try {
 		    method.setAccessible(true);
-		    method.invoke(instance);
+		    synchronized (method) {
+			method.invoke(instance);
+		    }
 		} catch (InvocationTargetException ex) {
 		    isAllMethodSuccess = false;
 		    System.err.format(ERROR_FMT, method.getName() + "方法发生异常！",
 			    ex.getCause().getMessage());
+		    return;
 		} catch (Exception ex) {
 		    isAllMethodSuccess = false;
 		    System.err.format(ERROR_FMT, method.getName(),
 			    ex.getMessage());
+		    return;
 		}
 	    }
 	    if (isAllMethodSuccess) {
 		succeedTCNum++;
 		System.out.format("<==完成！%n");
 	    }
+
 	}
 	System.out.format("%n执行完毕。共有%d个测试用例通过测试!", succeedTCNum);
     }
-
-    
 
 }

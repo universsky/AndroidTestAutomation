@@ -30,6 +30,8 @@ import com.taobao.sword.android.elements.IAndroidActivity;
 import com.taobao.sword.android.elements.ICaptureScreen;
 import com.taobao.sword.android.manager.IAndroidDriver;
 
+import etao.autotest.report.FileUpload;
+
 /**
  * @author 东海陈光剑 2014年4月10日 下午10:00:11
  */
@@ -303,7 +305,8 @@ public class Utils {
 	    int imgCount) throws InterruptedException {
 
 	Thread.sleep(1000);
-
+	String imgTimeChamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
+		.format(new Date());
 	IAndroidActivity activity = driver.getCurrentActivity();
 	System.out.println(activity.getActivityName() + " | Device ID: "
 		+ deviceId + "$" + imgCount);
@@ -311,13 +314,12 @@ public class Utils {
 	System.out.println("截图：" + deviceId + activity.getActivityName() + "$"
 		+ imgCount);
 	// 图片保存
-	Utils.GenerateImage(activity, deviceId, imgCount);
+	Utils.GenerateImage(activity, deviceId, imgCount, imgTimeChamp);
 	// 入库
 	String timestamp = Const.timestamp;
 	String activityName = activity.getActivityName();
 	String imgName = activity.getActivityName() + "$" + imgCount + ".jpeg";
-	String imgTimeChamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
-		.format(new Date());
+
 	Utils.insert(timestamp, activityName, imgName, deviceId, imgTimeChamp);
 
     }
@@ -405,10 +407,13 @@ public class Utils {
      * @return
      */
     public static boolean GenerateImage(IAndroidActivity activity,
-	    String deviceId, int imgCount) {// 对字节数组字符串进行Base64解码并生成图片
+	    String deviceId, int imgCount, String imgTimeStamp) {// 对字节数组字符串进行Base64解码并生成图片
 	String imgStr = activity.captureScreen();
-	String imgPath = Const.photoSavePath + "/" + deviceId;
-	String imgName = activity.getActivityName() + "$" + imgCount + ".jpeg";
+	// String imgPath = Const.photoSavePath + "/" + deviceId;
+	String imgPath = "D:/Apache2.2/htdocs/img/";
+	// 20140420070633$4d004077b4369049$20140420070650$com.etao.mobile.feedstream.FeedStreamActivity$5.jpeg
+	String imgName = Const.timestamp + "$" + deviceId + "$" + imgTimeStamp
+		+ "$" + activity.getActivityName() + "$" + imgCount + ".jpeg";
 	if (imgStr == null)
 	    // 图像数据为空
 	    return false;
@@ -434,10 +439,18 @@ public class Utils {
 	    out.write(bytes);
 	    out.flush();
 	    out.close();
+
+	    /**
+	     * 上传图片到Tomcat服务器
+	     */
+	    FileUpload up = new FileUpload();
+	    System.out.println(up.send(
+		    "http://127.0.0.1:8888/UploadServlet/upload",
+		    imgFullPathName));
 	    return true;
 	} catch (Exception e) {
-	    return false;
+	    e.printStackTrace();
 	}
+	return false;
     }
-
 }

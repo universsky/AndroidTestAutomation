@@ -83,7 +83,8 @@ public class FeedStreamTest {
 	solo.getCurrentActivity().editText(By.id("search_header_center_edit"))
 		.setText("ipad air");
 	Utils.record(solo, this.deviceId, imgCount++);
-	solo.getCurrentActivity().imageView(By.id("searchbtn")).click();
+
+	// solo.getCurrentActivity().button(By.id("searchbtn")).click();
 	// public static final int VK_ENTER = '\n';
 	// public static final int VK_BACK_SPACE = '\b';
 	// public static final int VK_TAB = '\t';
@@ -102,8 +103,7 @@ public class FeedStreamTest {
 	// public static final int VK_HOME = 0x24;
 
 	// solo.getCurrentActivity().sendKeyEvent(KeyEvent.VK_ENTER);
-
-	Utils.record(solo, this.deviceId, imgCount++);
+	// Utils.record(solo, this.deviceId, imgCount++);
 	solo.getCurrentActivity().goBack();
 	Utils.record(solo, this.deviceId, imgCount++);
     }
