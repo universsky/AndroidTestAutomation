@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +29,7 @@ import etao.autotest.util.Utils;
  * @author 东海陈光剑 2014年4月18日 下午11:01:28
  */
 @RunWith(Parameterized.class)
-public class FeedStreamTest {
+public class FeedStreamTest extends TestCase {
     private IAndroidDriver solo;
     private String deviceId;
     private int imgCount = 0;

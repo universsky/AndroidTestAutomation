@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,7 +26,7 @@ import etao.autotest.util.Utils;
  * @author 东海陈光剑 2014年4月19日 下午6:04:05
  */
 @RunWith(Parameterized.class)
-public class SearchTest {
+public class SearchTest extends TestCase {
 
     private IAndroidDriver driver;
     private String deviceId;

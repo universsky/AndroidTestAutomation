@@ -17,7 +17,7 @@ import etao.autotest.util.Utils;
 /**
  * @author 东海陈光剑 2014年4月19日 上午12:29:48
  */
-public class AMainRunner {
+public class ARunner {
 
     /**
      * 测试主入口
@@ -28,7 +28,34 @@ public class AMainRunner {
     public static void main(String[] args) throws ClassNotFoundException {
 	test();
 	// MultiThreadTest();
+	// testAll();
 
+    }
+
+    /**
+     * 单线程执行测试用例
+     */
+    private static void test() throws ClassNotFoundException {
+
+	long start = System.currentTimeMillis();
+	String packagePath = "etao.autotest.cases";
+
+	for (String deviceId : Utils.getDeviceList()) {
+	    MyTestRunner testRunner = new MyTestRunner();
+	    addTestClasses(testRunner, packagePath);
+	    testRunner.run(deviceId);
+	}
+
+	long end = System.currentTimeMillis();
+	GenerateReport.report(start, end);
+
+    }
+
+    private static void testAll() {
+	MyTestRunner testRunner = new MyTestRunner();
+	testRunner.addTestCase(StartMainActivityTest.class)
+		.addTestCase(FeedStreamTest.class)
+		.addTestCase(SearchTest.class).run();
     }
 
     public static void MultiThreadTest() throws ClassNotFoundException {
@@ -38,8 +65,6 @@ public class AMainRunner {
 	System.out.println(Thread.currentThread().getName() + "开始");// 打印开始标记
 	String packagePath = "etao.autotest.cases";
 
-	MyTestRunner testRunner = new MyTestRunner();
-	addTestClasses(testRunner, packagePath);
 	/**
 	 * private static List<Thread> runningThreads = new
 	 * ArrayList<Thread>(5); 在第一次new LThread对象的时候,会在静态区创建runningThreads
@@ -48,7 +73,9 @@ public class AMainRunner {
 	LThread lthread = new LThread();
 
 	for (String deviceId : Utils.getDeviceList()) {
-	    Runnable mr = new MultiRunner(deviceId, testRunner);
+	    MyTestRunner testRunner = new MyTestRunner();
+	    addTestClasses(testRunner, packagePath);
+	    Runnable mr = new MultiThread(deviceId, testRunner);
 	    Thread t = new LThread(mr);
 	    t.start();
 	}
@@ -63,23 +90,6 @@ public class AMainRunner {
 
 	long end = System.currentTimeMillis();
 	GenerateReport.report(start, end);
-    }
-
-    private static void test() throws ClassNotFoundException {
-	/**
-	 * 单线程执行测试用例
-	 */
-	long start = System.currentTimeMillis();
-	MyTestRunner testRunner = new MyTestRunner();
-	String packagePath = "etao.autotest.cases";
-	addTestClasses(testRunner, packagePath);
-	for (String deviceId : Utils.getDeviceList()) {
-	    testRunner.run(deviceId);
-	}
-
-	long end = System.currentTimeMillis();
-	GenerateReport.report(start, end);
-
     }
 
     /**

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,7 +30,7 @@ import etao.autotest.util.Utils;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
-public class StartMainActivityTest {
+public class StartMainActivityTest extends TestCase {
     private IAndroidDriver driver;
     private String deviceId;
     private int imgCount = 0;

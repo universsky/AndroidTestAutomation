@@ -29,7 +29,8 @@ public class FileUpload {
      * @return
      * @throws IOException
      */
-    public String send(String url, String filePath) throws IOException {
+    public synchronized String send(String url, String filePath)
+	    throws IOException {
 
 	File file = new File(filePath);
 	if (!file.exists() || !file.isFile()) {

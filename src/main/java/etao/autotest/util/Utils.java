@@ -30,6 +30,7 @@ import com.taobao.sword.android.elements.IAndroidActivity;
 import com.taobao.sword.android.elements.ICaptureScreen;
 import com.taobao.sword.android.manager.IAndroidDriver;
 
+import etao.autotest.dao.RecordDao;
 import etao.autotest.report.FileUpload;
 
 /**
@@ -258,6 +259,17 @@ public class Utils {
 
     }
 
+    public static void excuteCmd(String cmd) {
+	Process process = null;
+	String buff = "";
+	try {
+	    process = Runtime.getRuntime().exec(cmd);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
+    }
+
     public class MultiUninstall implements Runnable {
 	String deviceName, packageName;
 
@@ -320,7 +332,61 @@ public class Utils {
 	String activityName = activity.getActivityName();
 	String imgName = activity.getActivityName() + "$" + imgCount + ".jpeg";
 
-	Utils.insert(timestamp, activityName, imgName, deviceId, imgTimeChamp);
+	/**
+	 * 设置RecordDao对象属性
+	 */
+	RecordDao dao = new RecordDao();
+	dao.setTimestamp(timestamp);
+	dao.setActivityName(activityName);
+	dao.setDeviceId(deviceId);
+	dao.setImgName(imgName);
+	dao.setImgTimeChamp(imgTimeChamp);
+	Utils.insert(dao);
+	// Utils.insert(timestamp, activityName, imgName, deviceId,
+	// imgTimeChamp);
+
+    }
+
+    private static boolean insert(RecordDao dao) {
+	try {
+	    Class.forName("com.mysql.jdbc.Driver");
+
+	    System.out
+		    .println("Success loading Mysql Driver  com.mysql.jdbc.Driver  !");
+	} catch (Exception e) {
+	    System.out
+		    .print("Error loading Mysql Driver  com.mysql.jdbc.Driver  !");
+	    e.printStackTrace();
+	}
+	try {
+	    Connection connect = DriverManager.getConnection(Const.mysqlUrl,
+		    Const.mysqlUser, Const.mysqlPassword);
+
+	    System.out
+		    .println("Success connect Mysql server!" + Const.mysqlUrl);
+	    Statement stmt = connect.createStatement();
+	    String insertCmd = "INSERT INTO ct_pic(run_stamp,device_id,img_name,url,img_timestamp)"
+		    + " VALUES ("
+		    + "'"
+		    + dao.getTimestamp()
+		    + "',"
+		    + "'"
+		    + dao.getDeviceId()
+		    + "',"
+		    + "'"
+		    + dao.getImgName()
+		    + "',"
+		    + "'"
+		    + dao.getActivityName()
+		    + "','"
+		    + dao.getImgTimeChamp() + "')";
+	    System.out.println(insertCmd);
+	    boolean rs = stmt.execute(insertCmd);
+	    return rs;
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return false;
+	}
 
     }
 
@@ -347,10 +413,11 @@ public class Utils {
 	    e.printStackTrace();
 	}
 	try {
-	    Connection connect = DriverManager.getConnection(
-		    "jdbc:mysql://127.0.0.1:3306/test", "root", "isword");
+	    Connection connect = DriverManager.getConnection(Const.mysqlUrl,
+		    Const.mysqlUser, Const.mysqlPassword);
 
-	    System.out.println("Success connect Mysql server!");
+	    System.out
+		    .println("Success connect Mysql server!" + Const.mysqlUrl);
 	    Statement stmt = connect.createStatement();
 	    String insertCmd = "INSERT INTO ct_pic(run_stamp,device_id,img_name,url,img_timestamp)"
 		    + " VALUES ("

@@ -48,7 +48,6 @@ public class MyTestRunner {
 	return result;
     }
 
-    @SuppressWarnings("finally")
     public void run(String deviceId) {
 	if (mTestCases.isEmpty()) {
 	    System.out.format(WARING_FMT, "没有可运行的测试用例。");
@@ -89,19 +88,17 @@ public class MyTestRunner {
 		System.out.format("----方法%s%n", method.getName());
 		try {
 		    method.setAccessible(true);
-		    synchronized (method) {
-			method.invoke(instance);
-		    }
+
+		    method.invoke(instance);
+
 		} catch (InvocationTargetException ex) {
 		    isAllMethodSuccess = false;
 		    System.err.format(ERROR_FMT, method.getName() + "方法发生异常！",
 			    ex.getCause().getMessage());
-		    return;
 		} catch (Exception ex) {
 		    isAllMethodSuccess = false;
 		    System.err.format(ERROR_FMT, method.getName(),
 			    ex.getMessage());
-		    return;
 		}
 	    }
 	    if (isAllMethodSuccess) {
@@ -109,6 +106,62 @@ public class MyTestRunner {
 		System.out.format("<==完成！%n");
 	    }
 
+	}
+	System.out.format("%n执行完毕。共有%d个测试用例通过测试!", succeedTCNum);
+    }
+
+    public void run() {
+	if (mTestCases.isEmpty()) {
+	    System.out.format(WARING_FMT, "没有可运行的测试用例。");
+	    return;
+	}
+
+	int succeedTCNum = 0;
+	System.out.format("开始执行。共有%d个测试用例%n", mTestCases.size());
+	for (Class<?> testcase : mTestCases.keySet()) {
+	    // 1.构造实例
+	    Object instance = null;
+	    try {
+		Constructor constructor = testcase.getDeclaredConstructor();
+		constructor.setAccessible(true);
+		instance = constructor.newInstance();
+	    } catch (NoSuchMethodException ex) {
+		System.err.format(ERROR_FMT, testcase.getName() + "没有无参的构造器！",
+			ex.getCause().getMessage());
+	    } catch (InvocationTargetException ex) {
+		System.err.format(ERROR_FMT, testcase.getName() + "构造发生异常！", ex
+			.getCause().getMessage());
+	    } catch (Exception ex) {
+		System.err.format(ERROR_FMT, testcase.getName(),
+			ex.getMessage());
+	    }
+	    if (instance == null) {
+		continue;
+	    }
+
+	    System.out.format("%n==>TestCase:%s%n", testcase.getName());
+	    // 2.执行每个测试方法
+	    boolean isAllMethodSuccess = true;
+	    List<Method> methods = mTestCases.get(testcase);
+	    for (Method method : methods) {
+		System.out.format("----方法%s%n", method.getName());
+		try {
+		    method.setAccessible(true);
+		    method.invoke(instance);
+		} catch (InvocationTargetException ex) {
+		    isAllMethodSuccess = false;
+		    System.err.format(ERROR_FMT, method.getName() + "方法发生异常！",
+			    ex.getCause().getMessage());
+		} catch (Exception ex) {
+		    isAllMethodSuccess = false;
+		    System.err.format(ERROR_FMT, method.getName(),
+			    ex.getMessage());
+		}
+	    }
+	    if (isAllMethodSuccess) {
+		succeedTCNum++;
+		System.out.format("<==完成！%n");
+	    }
 	}
 	System.out.format("%n执行完毕。共有%d个测试用例通过测试!", succeedTCNum);
     }
