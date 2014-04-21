@@ -44,7 +44,7 @@ public class LThread extends Thread {
 	}
     }
 
-    public boolean hasThreadRunning() {
+    public static boolean hasThreadRunning() {
 	return (runningThreads.size() > 0);// 通过判断runningThreads是否为空就能知道是否还有线程未执行完
     }
 }

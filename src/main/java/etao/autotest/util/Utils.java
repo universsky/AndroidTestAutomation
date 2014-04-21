@@ -477,7 +477,7 @@ public class Utils {
 	    String deviceId, int imgCount, String imgTimeStamp) {// 对字节数组字符串进行Base64解码并生成图片
 	String imgStr = activity.captureScreen();
 	// String imgPath = Const.photoSavePath + "/" + deviceId;
-	String imgPath = "D:/Apache2.2/htdocs/img/";
+	String imgPath = Const.imgSavePath;
 	// 20140420070633$4d004077b4369049$20140420070650$com.etao.mobile.feedstream.FeedStreamActivity$5.jpeg
 	String imgName = Const.timestamp + "$" + deviceId + "$" + imgTimeStamp
 		+ "$" + activity.getActivityName() + "$" + imgCount + ".jpeg";

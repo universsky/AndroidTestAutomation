@@ -58,6 +58,13 @@ public class Const {
     public static final String uploadServerUrl = "http://10.125.1.58:8888/UploadServlet/upload";
 
     /**
+     * H5自动化测试
+     */
+    public static final String androidServerApkPath = "D:\\android_test_automation\\etao.test\\src\\main\\resources\\android-server.apk";
+
+    public static final String imgSavePath = "D:/Apache2.2/htdocs/img/";
+
+    /**
      * 截图保存的路径
      */
     public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
