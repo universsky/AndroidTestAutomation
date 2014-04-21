@@ -17,7 +17,7 @@ import etao.autotest.util.Utils;
 /**
  * @author 东海陈光剑 2014年4月19日 上午12:29:48
  */
-public class ARunner {
+public class RunnerA {
 
     /**
      * 测试主入口
@@ -75,7 +75,7 @@ public class ARunner {
 	for (String deviceId : Utils.getDeviceList()) {
 	    MyTestRunner testRunner = new MyTestRunner();
 	    addTestClasses(testRunner, packagePath);
-	    Runnable mr = new MultiThread(deviceId, testRunner);
+	    Runnable mr = new MultiRunner(deviceId, testRunner);
 	    Thread t = new LThread(mr);
 	    t.start();
 	}

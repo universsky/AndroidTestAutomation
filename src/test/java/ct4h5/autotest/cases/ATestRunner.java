@@ -38,7 +38,7 @@ public class ATestRunner {
 	    Thread thread = new LThread(target);
 	    thread.start();
 	}
-
+	Thread.yield();
 	while (true) {// 等待所有子线程执行完
 	    if (!LThread.hasThreadRunning()) {
 		break;

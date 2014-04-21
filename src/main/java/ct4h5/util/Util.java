@@ -163,11 +163,11 @@ public class Util {
      * @param driver
      * @param imgName
      */
-    public void takeScreenShot(WebDriver driver, String imgName) {
+    public static void takeScreenShot(WebDriver driver, String imgName) {
 	File scrFile = ((TakesScreenshot) driver)
 		.getScreenshotAs(OutputType.FILE);
 	try {
-	    FileUtils.copyFile(scrFile, new File("D:\\img\\" + imgName));
+	    FileUtils.copyFile(scrFile, new File(imgName));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
@@ -348,15 +348,21 @@ public class Util {
 		+ "$" + imgName;
 
 	String imgFullPathName = imgPath + imgSaveName;
-
-	String screencapCmd = "adb -s " + deviceId
-		+ " shell /system/bin/screencap -p  /sdcard/screenshot.png";
-	String pullScreenShotCmd = "adb -s " + deviceId
-		+ " pull /sdcard/screenshot.png " + imgFullPathName;
-	String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
-	excuCmd(screencapCmd);
-	excuCmd(pullScreenShotCmd);
-	excuCmd(rmScreenShotCmd);
+	/**
+	 * 采用Driver截图
+	 */
+	Util.takeScreenShot(driver, imgFullPathName);
+	/**
+	 * 采用Android shell /system/bin/screencap截图
+	 */
+	// String screencapCmd = "adb -s " + deviceId
+	// + " shell /system/bin/screencap -p  /sdcard/screenshot.png";
+	// String pullScreenShotCmd = "adb -s " + deviceId
+	// + " pull /sdcard/screenshot.png " + imgFullPathName;
+	// String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
+	// excuCmd(screencapCmd);
+	// excuCmd(pullScreenShotCmd);
+	// excuCmd(rmScreenShotCmd);
 	FileUpload fu = new FileUpload();
 	try {
 	    fu.send(Const.uploadServerUrl, imgFullPathName);

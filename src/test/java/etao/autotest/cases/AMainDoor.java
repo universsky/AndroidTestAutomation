@@ -11,7 +11,7 @@ import etao.autotest.report.GenerateReport;
 /**
  * @author 东海陈光剑 2014年4月20日 下午11:36:53
  */
-public class MainDoor {
+public class AMainDoor {
 
     public static void main(String[] args) {
 	long start = System.currentTimeMillis();
