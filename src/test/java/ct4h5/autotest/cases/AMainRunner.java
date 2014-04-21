@@ -10,7 +10,7 @@ import etao.autotest.util.Const;
 /**
  * @author 东海陈光剑 2014年2月17日 下午8:58:02
  */
-public class ATestRunner {
+public class AMainRunner {
 
     /**
      * @param args
@@ -38,6 +38,8 @@ public class ATestRunner {
 	    Thread thread = new LThread(target);
 	    thread.start();
 	}
+	// Causes the currently executing thread object to temporarily pause and
+	// allow other threads to execute.
 	Thread.yield();
 	while (true) {// 等待所有子线程执行完
 	    if (!LThread.hasThreadRunning()) {

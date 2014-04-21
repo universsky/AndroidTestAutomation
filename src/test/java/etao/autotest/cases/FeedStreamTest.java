@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import com.taobao.sword.android.elements.IAndroidActivity;
+import com.taobao.sword.android.enums.AndroidKeys;
 import com.taobao.sword.android.enums.ScrollSide;
 import com.taobao.sword.android.manager.AndroidRemoteDriver;
 import com.taobao.sword.android.manager.IAndroidDriver;
@@ -30,7 +31,7 @@ import etao.autotest.util.Utils;
  */
 @RunWith(Parameterized.class)
 public class FeedStreamTest extends TestCase {
-    private IAndroidDriver solo;
+    private IAndroidDriver driver;
     private String deviceId;
     private int imgCount = 0;
 
@@ -39,7 +40,7 @@ public class FeedStreamTest extends TestCase {
     }
 
     /**
-     * @param solo
+     * @param driver
      * @param deviceId
      */
     public FeedStreamTest(String deviceId) {
@@ -60,32 +61,35 @@ public class FeedStreamTest extends TestCase {
 
     @Test
     public void testFeedStream() throws InterruptedException {
-	solo = AndroidRemoteDriver.start(Const.ETAO.packageTest, deviceId);
+	driver = AndroidRemoteDriver.start(Const.ETAO.packageTest, deviceId);
 	// ´ò¿ªMainActivity
-	solo.startActivity(Const.ETAO.mainActivity);
-	Utils.record(solo, this.deviceId, imgCount++);
+	driver.startActivity(Const.ETAO.MainActivity);
+	Utils.record(driver, this.deviceId, imgCount++);
 	/**
 	 * List Scroll
 	 */
 	// solo.getCurrentActivity().view(By.id("feed_stream_listview"))
 	// .scroll(ScrollSide.UP);
-	solo.getCurrentActivity().view(By.id("feed_stream_listview")).click();
-	Utils.record(solo, this.deviceId, imgCount++);
+	driver.getCurrentActivity().view(By.id("feed_stream_listview")).click();
+	Utils.record(driver, this.deviceId, imgCount++);
 	// solo.getCurrentActivity().view(By.id("feed_stream_item_pic")).click();
 	// Utils.record(solo, this.deviceId, imgCount++);
-	solo.getCurrentActivity().goBack();
-	Utils.record(solo, this.deviceId, imgCount++);
+	driver.getCurrentActivity().goBack();
+	Utils.record(driver, this.deviceId, imgCount++);
 	/**
 	 * head ËÑË÷¿ò
 	 */
-	solo.getCurrentActivity().view(By.id("search_header_center_text"))
+	driver.getCurrentActivity().view(By.id("search_header_center_text"))
 		.click();
-	Utils.record(solo, this.deviceId, imgCount++);
+	Utils.record(driver, this.deviceId, imgCount++);
 	// solo.getCurrentActivity().sendKey("ipad air");
-	solo.getCurrentActivity().editText(By.id("search_header_center_edit"))
+	driver.getCurrentActivity()
+		.editText(By.id("search_header_center_edit"))
 		.setText("ipad air");
-	Utils.record(solo, this.deviceId, imgCount++);
+	Utils.record(driver, this.deviceId, imgCount++);
 
+	driver.getCurrentActivity().sendKeyEvent(
+		AndroidKeys.ENTER.getAndroidKeyCode());
 	// solo.getCurrentActivity().button(By.id("searchbtn")).click();
 	// public static final int VK_ENTER = '\n';
 	// public static final int VK_BACK_SPACE = '\b';
@@ -106,8 +110,22 @@ public class FeedStreamTest extends TestCase {
 
 	// solo.getCurrentActivity().sendKeyEvent(KeyEvent.VK_ENTER);
 	// Utils.record(solo, this.deviceId, imgCount++);
-	solo.getCurrentActivity().goBack();
-	Utils.record(solo, this.deviceId, imgCount++);
+	driver.getCurrentActivity().goBack();
+	Utils.record(driver, this.deviceId, imgCount++);
+	// <ImageView
+	// android:id="@+id/search_header_right_camera"
+	// android:layout_width="wrap_content"
+	// android:layout_height="wrap_content"
+	// android:contentDescription="@string/home_icon_scanning"
+	// android:src="@drawable/ic_scranning" />
+	// driver.getCurrentActivity()
+	// .imageView(By.id("search_header_right_camera")).click();
+	// Utils.record(driver, this.deviceId, imgCount++);
+	// driver.getCurrentActivity().sendKeyEvent(
+	// AndroidKeys.BACK.getAndroidKeyCode());
+	// // driver.getCurrentActivity().button(By.id("back_btn")).click();
+	// Utils.record(driver, this.deviceId, imgCount++);
+	driver.finishAllActivity();
     }
 
     @AfterClass

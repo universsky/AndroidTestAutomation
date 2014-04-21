@@ -34,7 +34,7 @@ import etao.autotest.util.Utils;
  * 2014年4月21日 上午12:20:58
  */
 @SuiteClasses({ StartMainActivityTest.class, FeedStreamTest.class,
-	SearchTest.class })
+	SearchTest.class, TravelActivityTest.class })
 public class TestAll extends TestCase {
 }
 

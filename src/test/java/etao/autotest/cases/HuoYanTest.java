@@ -1,36 +1,29 @@
 /**
- * StartMainActivity.java etao.autotest.cases etao.test 
- * 上午11:27:13
+ * etao.test HuoYanTest.java 2014年4月21日
  */
 package etao.autotest.cases;
-
-/**
- * @author 东海陈光剑 2014年4月11日 上午11:27:13
- */
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import com.taobao.sword.android.elements.IAndroidActivity;
 import com.taobao.sword.android.manager.AndroidRemoteDriver;
 import com.taobao.sword.android.manager.IAndroidDriver;
-import com.taobao.sword.android.object.By;
 
 import etao.autotest.util.Const;
 import etao.autotest.util.Utils;
 
-import org.junit.runners.Parameterized;
-
+/**
+ * @author 东海陈光剑 2014年4月21日 下午11:35:07
+ */
 @RunWith(Parameterized.class)
-public class StartMainActivityTest extends TestCase {
+public class HuoYanTest {
     private IAndroidDriver driver;
     private String deviceId;
     private int imgCount = 0;
@@ -43,7 +36,7 @@ public class StartMainActivityTest extends TestCase {
      * @param driver
      * @param deviceId
      */
-    public StartMainActivityTest(String deviceId) {
+    public HuoYanTest(String deviceId) {
 	this.deviceId = deviceId;
     }
 
@@ -60,12 +53,11 @@ public class StartMainActivityTest extends TestCase {
     }
 
     @Test
-    public void testStartMainActivity() throws InterruptedException {
+    public void testHuoyanActivity() throws InterruptedException {
 	driver = AndroidRemoteDriver.start(Const.ETAO.packageTest, deviceId);
+	// 遍历Activity
 
-	// 打开MainActivity
-	IAndroidActivity activity = driver
-		.startActivity(Const.ETAO.MainActivity);
+	driver.startActivity(Const.ETAO.HuoyanActivity);
 	Utils.record(driver, this.deviceId, imgCount++);
 	driver.finishAllActivity();
     }
@@ -74,5 +66,4 @@ public class StartMainActivityTest extends TestCase {
     public static void stopDriver() {
 	AndroidRemoteDriver.stop();
     }
-
 }
