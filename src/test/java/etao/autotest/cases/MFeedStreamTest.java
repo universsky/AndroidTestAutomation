@@ -3,22 +3,7 @@
  */
 package etao.autotest.cases;
 
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import junit.framework.TestCase;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import com.taobao.sword.android.elements.IAndroidActivity;
 import com.taobao.sword.android.enums.AndroidKeys;
-import com.taobao.sword.android.enums.ScrollSide;
 import com.taobao.sword.android.manager.AndroidRemoteDriver;
 import com.taobao.sword.android.manager.IAndroidDriver;
 import com.taobao.sword.android.object.By;
@@ -29,65 +14,42 @@ import etao.autotest.util.Utils;
 /**
  * @author 东海陈光剑 2014年4月18日 下午11:01:28
  */
-@RunWith(Parameterized.class)
-public class FeedStreamTest extends TestCase {
-    private IAndroidDriver driver;
-    private String deviceId;
+public class MFeedStreamTest implements Runnable {
     private int imgCount = 0;
+    private String deviceId;
 
-    @BeforeClass
-    public static void init() {
-    }
-
-    /**
-     * @param driver
-     * @param deviceId
-     */
-    public FeedStreamTest(String deviceId) {
+    public MFeedStreamTest(String deviceId) {
 	this.deviceId = deviceId;
     }
 
-    @Parameterized.Parameters
-    public static Collection<String[]> deviceIds() {
-	List<String> deviceList = Utils.getDeviceList();
-	List<String[]> col = new ArrayList<String[]>();
-	for (String e : deviceList) {
-	    String[] el = new String[] { e };
-	    col.add(el);
-	}
-	return col; // 字符串数组 [[Ljava.lang.String;@b4e29b,
-	// [Ljava.lang.String;@18941f7, null, null, null]
-    }
-
-    @Test
-    public void testFeedStream() throws InterruptedException {
-	
-	driver = AndroidRemoteDriver.start(Const.ETAO.packageTest, deviceId);
+    public void testFeedStream(String deviceId) throws InterruptedException {
+	IAndroidDriver driver = AndroidRemoteDriver.start(
+		Const.ETAO.packageTest, deviceId);
 	// 打开MainActivity
 	driver.startActivity(Const.ETAO.MainActivity);
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 	/**
 	 * List Scroll
 	 */
 	// solo.getCurrentActivity().view(By.id("feed_stream_listview"))
 	// .scroll(ScrollSide.UP);
 	driver.getCurrentActivity().view(By.id("feed_stream_listview")).click();
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 	// solo.getCurrentActivity().view(By.id("feed_stream_item_pic")).click();
 	// Utils.record(solo, this.deviceId, imgCount++);
 	driver.getCurrentActivity().goBack();
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 	/**
 	 * head 搜索框
 	 */
 	driver.getCurrentActivity().view(By.id("search_header_center_text"))
 		.click();
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 	// solo.getCurrentActivity().sendKey("ipad air");
 	driver.getCurrentActivity()
 		.editText(By.id("search_header_center_edit"))
 		.setText("ipad air");
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 
 	driver.getCurrentActivity().sendKeyEvent(
 		AndroidKeys.ENTER.getAndroidKeyCode());
@@ -112,7 +74,7 @@ public class FeedStreamTest extends TestCase {
 	// solo.getCurrentActivity().sendKeyEvent(KeyEvent.VK_ENTER);
 	// Utils.record(solo, this.deviceId, imgCount++);
 	driver.getCurrentActivity().goBack();
-	Utils.record(driver, this.deviceId, imgCount++);
+	Utils.record(driver, deviceId, imgCount++);
 	// <ImageView
 	// android:id="@+id/search_header_right_camera"
 	// android:layout_width="wrap_content"
@@ -129,8 +91,12 @@ public class FeedStreamTest extends TestCase {
 	driver.finishAllActivity();
     }
 
-    @AfterClass
-    public static void stopDriver() {
+    public void run() {
+	try {
+	    testFeedStream(this.deviceId);
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
+	}
 	AndroidRemoteDriver.stop();
     }
 }

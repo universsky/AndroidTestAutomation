@@ -67,6 +67,7 @@ public class StartMainActivityTest extends TestCase {
 	IAndroidActivity activity = driver
 		.startActivity(Const.ETAO.MainActivity);
 	Utils.record(driver, this.deviceId, imgCount++);
+	// driver.getCurrentActivity().dragOnScreen(100, 100, 100, 400);
 	driver.finishAllActivity();
     }
 

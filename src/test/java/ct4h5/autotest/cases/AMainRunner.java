@@ -40,7 +40,7 @@ public class AMainRunner {
 	}
 	// Causes the currently executing thread object to temporarily pause and
 	// allow other threads to execute.
-	Thread.yield();
+	// Thread.yield();
 	while (true) {// 等待所有子线程执行完
 	    if (!LThread.hasThreadRunning()) {
 		break;

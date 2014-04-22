@@ -23,11 +23,11 @@ public class LetsGo {
      */
 
     public static void main(String[] args) {
-	genApks();
+	// genApks();
 	LetsGo.letsGo();
     }
 
-    private static void genApks() {
+    public static void genApks() {
 	if (FLAG == 1) {
 	    Utils.generateApks(Const.ETAO.ApkPath);
 	} else if (FLAG == 2) {
