@@ -148,7 +148,10 @@ public class Const {
 	    "http://wapa.etao.com/search/filter.php?spm=0.0.0.0&q=%E5%8C%85%E8%87%80%E8%A3%99&yhsrc=h5",
 	    "http://h5.m.taobao.com/trip/flight/search/index.html?spm=0.0.0.0&ttid=703402@etao_h5_4.0",
 	    "http://ju.taobao.com/m/jusp/zhengdian/mtp.htm?spm=0.0.0.0",
-	    "http://h5.m.taobao.com/try/list.htm?spm=0.0.0.0" };
+	    "http://h5.m.taobao.com/try/list.htm?spm=0.0.0.0",
+	    "http://wapa.etao.com/squared9/index.php?datafrom=20",
+	    "http://wapa.etao.com/squared9/index.php?datafrom=100001",
+	    "http://wapa.etao.com/squared9/index.php?datafrom=13" };
 
     /**
      * ½ØÍ¼±£´æµÄÂ·¾¶

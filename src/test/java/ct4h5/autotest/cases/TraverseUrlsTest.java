@@ -13,7 +13,7 @@ import etao.autotest.util.Const;
 /**
  * @author 东海陈光剑 2014年3月13日 下午2:07:00
  */
-@SuppressWarnings("deprecation")
+
 public class TraverseUrlsTest implements Runnable {
 
     String deviceId;
