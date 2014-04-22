@@ -29,8 +29,11 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!-- <dependency> <groupId>com.taobao.test</groupId> <artifactId>sword.android.client</artifactId> 
-			<version>0.1-SNAPSHOT</version> </dependency> -->
+		<dependency>
+			<groupId>com.taobao.test</groupId>
+			<artifactId>sword.android.client</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
